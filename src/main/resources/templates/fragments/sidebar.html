@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="sidebar">
+    <!-- Sidebar -->
+    <div style="height:100%" class="dashboard-bgcolor border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading text-center b-db-color" style="font-size: 24px">
+            <span class="fas fa-tachometer-alt"></span> &nbsp;<span class="text-uppercase">Admin</span>
+        </div>
+        <div class="list-group list-group-flush b-leftmenu">
+
+            <ul id="sortable-menu">
+
+
+                <li><a href="/record/dashboard" class="dashboard-bgcolor b-db-color border-bottom b-newpage">Dashboard</a></li>
+
+                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">Closed File's<div class='fa fa-caret-down right'></div></a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/circulation/load_form" hx-target="#b-homedb" hx-swap="innerHTML">File Master Creation</a></li>
+                        <li><a class="b-newpage" hx-get="/record/circulation/file_master_out_entry" hx-target="#b-homedb" hx-swap="innerHTML">Outward Entry</a></li>
+                        <li><a class="b-newpage" hx-get="/record/circulation/file_master_in_entry" hx-target="#b-homedb" hx-swap="innerHTML">Inward Entry</a></li>
+
+
+                        <li class='sub-sub-menu'><a href='javascript:void(0)' class="b-newpage">Report's<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a class="b-newpage" hx-get="/record/circulation/outWardReport" hx-target="#b-homedb" hx-swap="innerHTML">Out Standing Report</a></li>
+                                <li><a class="b-newpage" hx-get="/record/circulation/masterReport" hx-target="#b-homedb" hx-swap="innerHTML">Master File's</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">Call Book File's<div class='fa fa-caret-down right'></div></a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/callbook/call_book_in_entry" hx-target="#b-homedb" hx-swap="innerHTML">Inward Entry</a></li>
+                        <li><a class="b-newpage" hx-get="/record/callbook/call_book_out_entry" hx-target="#b-homedb" hx-swap="innerHTML">Outward Entry</a></li>
+                        <li><a class="b-newpage" hx-get="/record/callbook/call_book_view" hx-target="#b-homedb" hx-swap="innerHTML">Received File's Report</a></li>
+                    </ul>
+                </li>
+
+<!--                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">Reference File's<div class='fa fa-caret-down right'></div></a>-->
+<!--                    <ul>-->
+<!--                        <li><a class="b-newpage" hx-get="/record/reference/reference_in_entry" hx-target="#b-homedb" hx-swap="innerHTML">Inward Entry</a></li>-->
+<!--                        <li><a class="b-newpage" hx-get="/record/reference/reference_out_entry" hx-target="#b-homedb" hx-swap="innerHTML">Outward Entry</a></li>-->
+<!--                        <li><a class="b-newpage" hx-get="/record/reference/masterReport" hx-target="#b-homedb" hx-swap="innerHTML">Report</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+
+                <li class='sub-menu'>
+                    <a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">
+                        Old Register's
+                        <div class='fa fa-caret-down right'></div>
+                    </a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/oldregister/master_creation" hx-target="#b-homedb" hx-swap="innerHTML">Register Master Creation</a></li>
+                        <li><a class="b-newpage" hx-get="/record/oldregister/outward_entry" hx-target="#b-homedb" hx-swap="innerHTML">Outward Entry</a></li>
+                        <li><a class="b-newpage" hx-get="/record/oldregister/inward_entry" hx-target="#b-homedb" hx-swap="innerHTML">Inward Entry</a></li>
+
+                        <li class='sub-sub-menu'><a href='javascript:void(0)' class="b-newpage">Report's<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a class="b-newpage" hx-get="/record/oldregister/view_details" hx-target="#b-homedb" hx-swap="innerHTML">View Master Details</a></li>
+                                <li><a class="b-newpage" hx-get="/record/oldregister/outstanding_records" hx-target="#b-homedb" hx-swap="innerHTML">Outstanding Records</a></li>
+<!--                                <li><a class="b-newpage" hx-get="/record/oldregister/transaction_details" hx-target="#b-homedb" hx-swap="innerHTML">Transaction Details</a></li>-->
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">RTI<div class='fa fa-caret-down right'></div></a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/rti/load_form" hx-target="#b-homedb" hx-swap="innerHTML">RTI Entry</a></li>
+                        <li class='sub-sub-menu'><a href='javascript:void(0)' class="b-newpage">Report's<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a class="b-newpage" hx-get="/record/rti/rti_report" hx-target="#b-homedb" hx-swap="innerHTML">Report</a></li>
+                                <li><a class="b-newpage" hx-get="/record/rti/rti_monthly_report" hx-target="#b-homedb" hx-swap="innerHTML">Monthly Report</a></li>
+
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </li>
+                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">Library<div class='fa fa-caret-down right'></div></a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/library/load_form" hx-target="#b-homedb" hx-swap="innerHTML">Book Master Creation</a></li>
+                        <li><a class="b-newpage" hx-get="/record/library/outward_entry" hx-target="#b-homedb" hx-swap="innerHTML">Outward Entry</a></li>
+                        <li><a class="b-newpage" hx-get="/record/library/inward_entry" hx-target="#b-homedb" hx-swap="innerHTML">Inward Entry</a></li>
+                        <li class='sub-sub-menu'><a href='javascript:void(0)' class="b-newpage">Report's<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a class="b-newpage" hx-get="/record/library/show_table" hx-target="#b-homedb" hx-swap="innerHTML">Master Book List </a></li>
+                                <li><a class="b-newpage" hx-get="/record/library/outstanding_report" hx-target="#b-homedb" hx-swap="innerHTML">OutStanding  Book List </a></li>
+                            </ul>
+                        </li>
+<!--                        <li><a class="b-newpage" hx-get="/record/library/history" hx-target="#b-homedb">Library Transaction History</a></li>-->
+
+                    </ul>
+                </li>
+
+
+                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">Destruction Files<div class='fa fa-caret-down right'></div></a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/circulation/destructionreport" hx-target="#b-homedb" hx-swap="innerHTML">Report</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li class='sub-menu'><a href='javascript:void(0)' class="dashboard-bgcolor border-bottom b-db-color b-newpage">Reports<div class='fa fa-caret-down right'></div></a>
+                    <ul>
+                        <li><a class="b-newpage" hx-get="/record/dashboard/load_search" hx-target="#b-homedb" hx-swap="innerHTML">Date Wise Report</a></li>
+                        <li><a class="b-newpage" hx-get="/record/summaryreport" hx-target="#b-homedb" hx-swap="innerHTML">Summary Report</a></li>
+                        <li><a class="b-newpage" hx-get="/record/dashboard/month_wise_report_view" hx-target="#b-homedb" hx-swap="innerHTML">
+                            Month Wise Range Report</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div id="b-homedb" th:fragment="tabler">
+
+    <div class="my-5">
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12">
+
+                    <div class="card shadow-sm border-0 rounded-3">
+                        <div class="card-body p-4">
+
+                            <h3 style="font-size: 28px; color: #333;" class="text-center mb-4 fw-bold">
+                                RTI Monthly Report
+                            </h3>
+
+                            <div class="bg-light p-3 rounded-3 mb-4">
+                                <form hx-get="/record/rti/rti_monthly_report"
+                                      hx-target="#b-homedb"
+                                      hx-swap="outerHTML"
+                                      class="d-flex flex-wrap align-items-center justify-content-center">
+
+                                    <div class="d-flex align-items-center mb-2" style="margin-right: 40px;">
+                                        <label class="fw-bold text-secondary mb-0" style="margin-right: 15px;">Year:</label>
+                                        <input type="number"
+                                               name="year"
+                                               class="form-control border-secondary"
+                                               th:value="${selectedYear}"
+                                               placeholder="YYYY"
+                                               min="1900"
+                                               max="2100"
+                                               style="width: 120px;"
+                                               required>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-2" style="margin-right: 40px;">
+                                        <label class="fw-bold text-secondary mb-0" style="margin-right: 15px;">Month:</label>
+                                        <select class="form-select border-secondary" name="month" style="width: 180px;">
+                                            <option value="" th:selected="${selectedMonth == null}">-- All Months --</option>
+                                            <option value="1"  th:selected="${selectedMonth == 1}">January</option>
+                                            <option value="2"  th:selected="${selectedMonth == 2}">February</option>
+                                            <option value="3"  th:selected="${selectedMonth == 3}">March</option>
+                                            <option value="4"  th:selected="${selectedMonth == 4}">April</option>
+                                            <option value="5"  th:selected="${selectedMonth == 5}">May</option>
+                                            <option value="6"  th:selected="${selectedMonth == 6}">June</option>
+                                            <option value="7"  th:selected="${selectedMonth == 7}">July</option>
+                                            <option value="8"  th:selected="${selectedMonth == 8}">August</option>
+                                            <option value="9"  th:selected="${selectedMonth == 9}">September</option>
+                                            <option value="10" th:selected="${selectedMonth == 10}">October</option>
+                                            <option value="11" th:selected="${selectedMonth == 11}">November</option>
+                                            <option value="12" th:selected="${selectedMonth == 12}">December</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <button type="submit" class="btn btn-primary px-4 fw-bold">
+                                            <i class="fas fa-search me-2"></i> Load Data
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <hr class="text-muted opacity-25 my-4">
+
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Petitioner Name</th>
+                                        <th>Address</th>
+                                        <th>Phone No</th>
+                                        <th>Letter No</th>
+                                        <th>Subject</th>
+                                        <th>RTI Date</th>
+                                        <th>e-Challan No</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="record, iterStat : ${rti}">
+                                        <td th:text="${iterStat.index + 1}"></td>
+                                        <td th:text="${record.pettitioner_name}"></td>
+                                        <td th:text="${record.pettitioner_address}"></td>
+                                        <td th:text="${record.pettitioner_phoneno}"></td>
+                                        <td th:text="${record.letter_no}"></td>
+                                        <td th:text="${record.subject}"></td>
+                                        <td th:text="${#temporals.format(record.rtiDate, 'dd-MM-yyyy')}"></td>
+                                        <td th:text="${record.e_challan_no}"></td>
+                                        <td th:text="${record.amount}"></td>
+                                        <td th:text="${record.remarks}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        text: 'Export PDF',
+                        className: 'btn btn-secondary mr-2',
+                        filename: 'RTI_Monthly_Report',
+                        title: '',
+                        customize: function (doc) {
+                            doc.pageMargins = [40, 70, 40, 60];
+                            doc.defaultStyle.fontSize = 10;
+                            doc.content.unshift({
+                                margin: [0, 0, 0, 12],
+                                stack: [
+                                    { text: 'Erode District Administration', fontSize: 16, bold: true, alignment: 'center' },
+                                    { text: 'Record Room', fontSize: 11, alignment: 'center' },
+                                    { text: 'RTI MONTHLY REPORT', fontSize: 13, bold: true, alignment: 'center', margin: [0, 6, 0, 0] },
+                                    { text: 'Generated on: ' + new Date().toLocaleDateString(), fontSize: 9, alignment: 'center' }
+                                ]
+                            });
+                            doc.styles.tableHeader = { fillColor: '#4CAF50', color: 'white', bold: true, alignment: 'center' };
+                        },
+                        exportOptions: { columns: ':visible' }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export Excel',
+                        className: 'btn btn-secondary',
+                        filename: 'RTI_Monthly_Report',
+                        title: '',
+                        sheetName: 'Report',
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                            var $sheet = $(sheet);
+                            var styles = xlsx.xl['styles.xml'];
+                            $(styles).find('xf').each(function () {
+                                var xf = $(this);
+                                if (xf.attr('xfId') === '0') {
+                                    xf.attr('applyAlignment', '1');
+                                    if (!xf.find('alignment').length) {
+                                        xf.append('<alignment horizontal="center" vertical="center"/>');
+                                    }
+                                }
+                            });
+                            $('row', sheet).each(function () {
+                                var r = parseInt($(this).attr('r'));
+                                $(this).attr('r', r + 5);
+                                $('c', this).each(function () {
+                                    var ref = $(this).attr('r');
+                                    var col = ref.replace(/[0-9]/g, '');
+                                    $(this).attr('r', col + (r + 5));
+                                });
+                            });
+                            var today = new Date().toLocaleDateString();
+                            var sheetData = $('sheetData', sheet);
+                            sheetData.prepend(
+                                '<row r="1" ht="28" customHeight="1"><c r="A1" t="inlineStr" s="51"><is><t>Erode District Administration</t></is></c></row>' +
+                                '<row r="2" ht="22" customHeight="1"><c r="A2" t="inlineStr" s="51"><is><t>Record Room</t></is></c></row>' +
+                                '<row r="3" ht="20" customHeight="1"><c r="A3" t="inlineStr" s="51"><is><t>Generated on: ' + today + '</t></is></c></row>' +
+                                '<row r="4" ht="26" customHeight="1"><c r="A4" t="inlineStr" s="51"><is><t>RTI MONTHLY REPORT</t></is></c></row>' +
+                                '<row r="5"></row>'
+                            );
+                            var mergeCells = $sheet.find('mergeCells');
+                            if (!mergeCells.length) {
+                                mergeCells = $('<mergeCells count="0"/>');
+                                $sheet.append(mergeCells);
+                            }
+                            mergeCells.append('<mergeCell ref="A1:J1"/>');
+                            mergeCells.append('<mergeCell ref="A2:J2"/>');
+                            mergeCells.append('<mergeCell ref="A3:J3"/>');
+                            mergeCells.append('<mergeCell ref="A4:J4"/>');
+                            var currentCount = parseFloat(mergeCells.attr('count')) || 0;
+                            mergeCells.attr('count', currentCount + 4);
+                            var colWidths = [];
+                            $('row', sheet).each(function () {
+                                var r = parseInt($(this).attr('r'));
+                                if (r > 5) {
+                                    $('c', this).each(function (i) {
+                                        var text = $('t', this).text();
+                                        var len = text ? text.length : 0;
+                                        colWidths[i] = Math.max(colWidths[i] || 10, len);
+                                    });
+                                }
+                            });
+                            var colsXml = '<cols>';
+                            colWidths.forEach(function (w, i) {
+                                colsXml += '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + Math.min(w + 5, 50) + '"/>';
+                            });
+                            colsXml += '</cols>';
+                            $sheet.find('worksheet').prepend(colsXml);
+                        },
+                        exportOptions: { columns: ':visible' }
+                    }
+                ]
+            });
+        });
+    </script>
+
+</div>
+</html>
