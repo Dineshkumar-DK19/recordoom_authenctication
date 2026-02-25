@@ -16,19 +16,10 @@ public class HomeController {
     private DashboardService dashboardService;
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String error,
-                            @RequestParam(value = "logout", required = false) String logout,
-                            Model model) {
-
-        if (error != null) {
-            // This matches the th:if="${errorMessage}" in your login.html fragment
-            model.addAttribute("errorMessage", "Invalid User ID or Password.");
-        }
-
+    public String loginPage(@RequestParam(value = "logout", required = false) String logout, Model model) {
         if (logout != null) {
             model.addAttribute("logoutMessage", "You have been logged out successfully.");
         }
-
         return "layout/outsidelayout";
     }
 
@@ -37,7 +28,6 @@ public class HomeController {
         model.addAttribute("stats", dashboardService.getDashboardStats());
         return "layout/insidelayout";
     }
-
     @GetMapping("/profile")
     public String profileFragment(Model model) {
         return "fragments/table :: content";

@@ -6,7 +6,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class RecordroomApplication {
+public class
+RecordroomApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RecordroomApplication.class, args);
